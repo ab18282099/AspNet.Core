@@ -64,9 +64,10 @@ namespace AspNet.Core.Dapper.Web
                 = Assembly.GetExecutingAssembly()
                           .GetReferencedAssemblies()
                           .Select(Assembly.Load)
-                          .Concat(new[]
+                          .Concat(new Assembly[]
                            {
-                               Assembly.Load("AspNet.Core.Dapper.Repository")
+                               // 此處載入 Web 專案未引用到之專案
+                               Assembly.Load("AspNet.Core.Dapper.Web"), 
                            })
                           .SelectMany(p => p.ExportedTypes.Where(s => s.IsAssignableTo<ITypeRegister>() && !s.IsInterface))
                           .Select(p => (ITypeRegister)Activator.CreateInstance(p))

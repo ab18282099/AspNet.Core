@@ -1,0 +1,12 @@
+﻿{
+  "modules": [
+    {
+      "type": "AspNet.Core.Dapper.Web.WebModule, AspNet.Core.Dapper.Web",
+      "properties": {
+        "SettingHelper": "Power.Mvc.Helper.SettingHelper, Power.Mvc.Helper",
+        "CacheHelper": "Power.Mvc.Helper.RedisCacheHelper, Power.Mvc.Helper",
+        "EncryptHelper": "Power.Mvc.Helper.AesEncryptHelper, Power.Mvc.Helper"
+      }
+    }
+  ]
+}

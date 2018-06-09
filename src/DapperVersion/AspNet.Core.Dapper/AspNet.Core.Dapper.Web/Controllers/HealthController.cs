@@ -1,6 +1,8 @@
 ﻿using AspNet.Core.Dapper.Repository;
 using AspNet.Core.Dapper.Repository.Models;
 using Microsoft.AspNetCore.Mvc;
+using Power.Mvc.Helper;
+using Power.Mvc.Helper.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,16 +24,24 @@ namespace AspNet.Core.Dapper.Web.Controllers
         private readonly IMySqlTestRepository MySqlTestRepository;
 
         /// <summary>
+        /// 快取
+        /// </summary>
+        private readonly ICacheHelper CacheHelper;
+
+        /// <summary>
         /// 建構子
         /// </summary>
         /// <param name="testEntityRepository">測試資料儲存庫(PostgreSql)</param>
         /// <param name="mySqlTestRepository">測試資料儲存庫(MySql)</param>
+        /// <param name="cacheHelper">快取</param>
         public HealthController(
             ITestEntityRepository testEntityRepository,
-            IMySqlTestRepository mySqlTestRepository)
+            IMySqlTestRepository mySqlTestRepository,
+            ICacheHelper cacheHelper)
         {
             this.TestEntityRepository = testEntityRepository;
             this.MySqlTestRepository = mySqlTestRepository;
+            this.CacheHelper = cacheHelper;
         }
 
         /// <summary>
@@ -54,6 +64,21 @@ namespace AspNet.Core.Dapper.Web.Controllers
         public IActionResult MySqlTest()
         {
             List<MySqlTest> data = this.MySqlTestRepository.GetList("WHERE 1=1").ToList();
+
+            return this.Json(data);
+        }
+
+        /// <summary>
+        /// 測試快取
+        /// </summary>
+        /// <returns>json response</returns>
+        [HttpGet]
+        public IActionResult CacheTest()
+        {
+            TestEntity data = this.CacheHelper.Get(
+                "Cache:Test",
+                100,
+                () => this.TestEntityRepository.GetList("WHERE 1=1").FirstOrDefault());
 
             return this.Json(data);
         }
