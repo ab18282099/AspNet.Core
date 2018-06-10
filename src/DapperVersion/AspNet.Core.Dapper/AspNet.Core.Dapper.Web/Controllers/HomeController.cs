@@ -1,43 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AspNet.Core.Dapper.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using AspNet.Core.Dapper.Web.Models;
+using System.Diagnostics;
 
-namespace AspNet.Core.Dapper.Web.Controllers
+namespace AspNet.Core.Web.Controllers
 {
+    /// <summary>
+    /// 範例的首頁控制器
+    /// </summary>
     public class HomeController : Controller
     {
+        /// <summary>
+        /// 首頁
+        /// </summary>
+        /// <returns>檢視</returns>
         public IActionResult Index()
         {
-            return View();
+            return this.View();
         }
 
+        /// <summary>
+        /// 關於
+        /// </summary>
+        /// <returns>檢視</returns>
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            this.ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return this.View();
         }
 
+        /// <summary>
+        /// 聯絡
+        /// </summary>
+        /// <returns>檢視</returns>
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            this.ViewData["Message"] = "Your contact page.";
 
-            return View();
+            return this.View();
         }
 
+        /// <summary>
+        /// 隱私政策
+        /// </summary>
+        /// <returns>檢視</returns>
         public IActionResult Privacy()
         {
-            return View();
+            return this.View();
         }
 
+        /// <summary>
+        /// 錯誤頁面
+        /// </summary>
+        /// <returns>檢視</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return this.View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier
+            });
         }
     }
 }

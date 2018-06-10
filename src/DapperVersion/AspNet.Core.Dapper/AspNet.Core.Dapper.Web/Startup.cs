@@ -67,7 +67,7 @@ namespace AspNet.Core.Dapper.Web
                           .Concat(new Assembly[]
                            {
                                // 此處載入 Web 專案未引用到之專案
-                               Assembly.Load("AspNet.Core.Dapper.Web"), 
+                               Assembly.Load("AspNet.Core.Dapper.Web"),
                            })
                           .SelectMany(p => p.ExportedTypes.Where(s => s.IsAssignableTo<ITypeRegister>() && !s.IsInterface))
                           .Select(p => (ITypeRegister)Activator.CreateInstance(p))
@@ -84,9 +84,10 @@ namespace AspNet.Core.Dapper.Web
 
             IContainer container = builder.Build();
 
-            // 設定套件相依性解析
-            PackageDiResolver.Current.SetAutofacContainer(container);
             this.ApplicationContainer = container;
+
+            // 設定套件相依性解析
+            PackageDiResolver.Current.SetAutofacContainer(this.ApplicationContainer);
 
             return new AutofacServiceProvider(this.ApplicationContainer);
         }
