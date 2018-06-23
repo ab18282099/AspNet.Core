@@ -6,8 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
-    <PackageReference Include="PowerHelper.Core" Version="1.0.1" />
-    <PackageReference Include="PowerReop.EFCore" Version="1.0.3" />
+    <PackageReference Include="PowerHelper.Core" Version="1.0.4" />
+    <PackageReference Include="PowerReop.EFCore" Version="1.0.8" />
   </ItemGroup>
 
 </Project>

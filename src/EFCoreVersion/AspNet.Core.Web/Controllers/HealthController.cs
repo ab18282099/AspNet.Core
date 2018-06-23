@@ -16,13 +16,21 @@ namespace AspNet.Core.Web.Controllers
         private readonly ITestEntityRepository TestEntityRepository;
 
         /// <summary>
+        /// MySql 測試資料儲存庫介面
+        /// </summary>
+        private readonly IMySqlTestRepository MySqlTestRepository;
+
+        /// <summary>
         /// 建構子
         /// </summary>
         /// <param name="testEntityRepository">測試資料儲存庫(PostgreSql)</param>
+        /// <param name="mySqlTestRepository">MySql 測試資料儲存庫介面</param>
         public HealthController(
-            ITestEntityRepository testEntityRepository)
+            ITestEntityRepository testEntityRepository,
+            IMySqlTestRepository mySqlTestRepository)
         {
             this.TestEntityRepository = testEntityRepository;
+            this.MySqlTestRepository = mySqlTestRepository;
         }
 
         /// <summary>
@@ -33,6 +41,18 @@ namespace AspNet.Core.Web.Controllers
         public IActionResult PostgreSqlTest()
         {
             List<TestEntity> data = this.TestEntityRepository.GetAll();
+
+            return this.Json(data);
+        }
+
+        /// <summary>
+        /// 測試取得 MySql 測試資料集合
+        /// </summary>
+        /// <returns>json response</returns>
+        [HttpGet]
+        public IActionResult MySqlTest()
+        {
+            List<MySqlTest> data = this.MySqlTestRepository.GetAll();
 
             return this.Json(data);
         }

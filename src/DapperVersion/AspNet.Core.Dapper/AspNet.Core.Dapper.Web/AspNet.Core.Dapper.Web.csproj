@@ -5,9 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="StyleCop.Cache" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="PowerHelper.Core" Version="1.0.3" />
-    <PackageReference Include="PowerRepo.Dapper" Version="1.0.3" />
+    <PackageReference Include="PowerHelper.Core" Version="1.0.4" />
+    <PackageReference Include="PowerRepo.Dapper" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

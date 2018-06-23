@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Power.Mvc.Helper;
 using Power.Mvc.Helper.Extensions;
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -67,7 +68,6 @@ namespace AspNet.Core.Dapper.Web
                           .Concat(new Assembly[]
                            {
                                // 此處載入 Web 專案未引用到之專案
-                               Assembly.Load("AspNet.Core.Dapper.Web"),
                            })
                           .SelectMany(p => p.ExportedTypes.Where(s => s.IsAssignableTo<ITypeRegister>() && !s.IsInterface))
                           .Select(p => (ITypeRegister)Activator.CreateInstance(p))
@@ -78,6 +78,9 @@ namespace AspNet.Core.Dapper.Web
             {
                 registrar.RegisterTypes(builder);
             }
+
+            // 註冊常用模組，預設抓根目錄的 webmodule.json
+            builder.RegisterWebModule(Path.Combine(Directory.GetCurrentDirectory(), "webmodule.json"));
 
             // 記錄非預期註冊的型別
             builder.DumpUnexpectRegistration();

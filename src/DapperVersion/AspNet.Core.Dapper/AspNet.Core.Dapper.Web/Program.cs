@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace AspNet.Core.Dapper.Web
 {
@@ -22,15 +23,23 @@ namespace AspNet.Core.Dapper.Web
         public static void Main(string[] args)
         {
             // 建立 WebHost 並且執行
-            CreateWebHostBuilder(args).Build().Run();
+            CreateWebHost(args).Run();
         }
 
         /// <summary>
         /// 建立 WebHost 並且使用 Startup 啟動
         /// </summary>
-        /// <param name="args"></param>
-        /// <returns></returns>
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) => WebHost.CreateDefaultBuilder(args)
-                                                                                    .UseStartup<Startup>();
+        /// <param name="args">參數</param>
+        /// <returns>IWebHost</returns>
+        public static IWebHost CreateWebHost(string[] args)
+        {
+            IConfigurationRoot configuration = new ConfigurationBuilder().AddCommandLine(args).Build();
+
+            return WebHost.CreateDefaultBuilder(args)
+                          .UseIISIntegration()
+                          .UseStartup<Startup>()
+                          .UseUrls(configuration["urls"])
+                          .Build();
+        }
     }
 }

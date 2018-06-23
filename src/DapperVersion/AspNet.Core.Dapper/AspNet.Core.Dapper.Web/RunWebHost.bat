@@ -1,0 +1,1 @@
+start "AspNet.Core.Dapper.Web" dotnet run --urls "http://localhost:43001"

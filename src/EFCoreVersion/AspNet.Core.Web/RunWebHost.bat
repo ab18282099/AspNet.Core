@@ -1,0 +1,1 @@
+start "AspNet.Core.Web" dotnet run --urls "http://localhost:43000"
