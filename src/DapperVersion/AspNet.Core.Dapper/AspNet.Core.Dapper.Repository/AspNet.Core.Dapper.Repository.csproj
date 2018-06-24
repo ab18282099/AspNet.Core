@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="PowerHelper.Core" Version="1.0.4" />
-    <PackageReference Include="PowerRepo.Dapper" Version="1.0.4" />
+    <PackageReference Include="PowerRepo.Dapper" Version="1.0.5" />
   </ItemGroup>
 
 </Project>

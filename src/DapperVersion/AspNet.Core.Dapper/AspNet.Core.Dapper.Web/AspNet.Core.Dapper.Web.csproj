@@ -11,7 +11,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="PowerHelper.Core" Version="1.0.4" />
-    <PackageReference Include="PowerRepo.Dapper" Version="1.0.4" />
+    <PackageReference Include="PowerRepo.Dapper" Version="1.0.5" />
   </ItemGroup>
 
   <ItemGroup>
