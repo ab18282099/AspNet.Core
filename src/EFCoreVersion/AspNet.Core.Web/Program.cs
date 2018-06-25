@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
+using System;
 
 namespace AspNet.Core.Web
 {
@@ -22,8 +25,27 @@ namespace AspNet.Core.Web
         /// <param name="args">參數</param>
         public static void Main(string[] args)
         {
-            // 建立 WebHost 並且執行
-            CreateWebHost(args).Run();
+            // NLog: setup the logger first to catch all errors
+            NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
+
+            try
+            {
+                logger.Debug("Main loading...");
+
+                // 建立 WebHost 並且執行
+                CreateWebHost(args).Run();
+            }
+            catch (Exception exception)
+            {
+                // NLog: catch setup errors
+                logger.Error(exception, "Stopped program because of exception");
+                throw;
+            }
+            finally
+            {
+                // Ensure to flush and stop internal timers/threads before application-exit (Avoid segmentation fault on Linux)
+                NLog.LogManager.Shutdown();
+            }
         }
 
         /// <summary>
@@ -38,6 +60,12 @@ namespace AspNet.Core.Web
             return WebHost.CreateDefaultBuilder(args)
                           .UseIISIntegration()
                           .UseStartup<Startup>()
+                          .ConfigureLogging(logging =>
+                           {
+                               logging.ClearProviders();
+                               logging.SetMinimumLevel(LogLevel.Trace);
+                           })
+                          .UseNLog()
                           .UseUrls(configuration["urls"])
                           .Build();
         }
