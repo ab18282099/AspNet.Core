@@ -26,7 +26,7 @@ namespace AspNet.Core.Web
         public static void Main(string[] args)
         {
             // NLog: setup the logger first to catch all errors
-            NLog.Logger logger = NLog.Web.NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
+            NLog.Logger logger = NLogBuilder.ConfigureNLog("NLog.config").GetCurrentClassLogger();
 
             try
             {
