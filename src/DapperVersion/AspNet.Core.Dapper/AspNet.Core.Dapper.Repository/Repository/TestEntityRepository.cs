@@ -1,4 +1,5 @@
 ﻿using AspNet.Core.Dapper.Repository.Models;
+using Autofac.Features.AttributeFilters;
 using Power.Repository.Dapper;
 
 namespace AspNet.Core.Dapper.Repository
@@ -12,7 +13,7 @@ namespace AspNet.Core.Dapper.Repository
         /// 建構子
         /// </summary>
         /// <param name="factory">連線工廠</param>
-        public TestEntityRepository(IPostgreSqlConnectionFactory factory) : base(factory)
+        public TestEntityRepository([KeyFilter(ConnectionKey.PostgresDocker)]IPostgreSqlConnectionFactory factory) : base(factory)
         {
         }
     }

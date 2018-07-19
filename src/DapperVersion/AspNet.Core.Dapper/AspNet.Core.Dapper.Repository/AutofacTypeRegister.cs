@@ -3,6 +3,7 @@ using Power.Mvc.Helper;
 using Power.Mvc.Helper.Extensions;
 using Power.Repository.Dapper;
 using System.Reflection;
+using Autofac.Features.AttributeFilters;
 
 namespace AspNet.Core.Dapper.Repository
 {
@@ -27,18 +28,25 @@ namespace AspNet.Core.Dapper.Repository
             builder
                .RegisterAssemblyTypes(assembly)
                .AsImplementedInterfaces()
+               .WithAttributeFiltering()
                .InstancePerLifetimeScope()
                .LogExpectRegistration();
 
             builder
                .RegisterType<PostgreSqlConnectionFactory>()
-               .As<IPostgreSqlConnectionFactory>()
+               .Keyed<IPostgreSqlConnectionFactory>(ConnectionKey.PostgresLocal)
+               .InstancePerLifetimeScope()
+               .LogExpectRegistration();
+
+            builder
+               .RegisterType<DockerPostgresConnectionFactory>()
+               .Keyed<IPostgreSqlConnectionFactory>(ConnectionKey.PostgresDocker)
                .InstancePerLifetimeScope()
                .LogExpectRegistration();
 
             builder
                .RegisterType<MySqlConnectionFactory>()
-               .As<IMySqlConnectionFactory>()
+               .Keyed<IMySqlConnectionFactory>(ConnectionKey.MySqlLocal)
                .InstancePerLifetimeScope()
                .LogExpectRegistration();
         }
