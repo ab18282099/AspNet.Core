@@ -13,7 +13,7 @@ namespace AspNet.Core.Dapper.Repository
         /// 建構子
         /// </summary>
         /// <param name="factory">連線工廠</param>
-        public TestEntityRepository([KeyFilter(ConnectionKey.PostgresDocker)]IPostgreSqlConnectionFactory factory) : base(factory)
+        public TestEntityRepository([KeyFilter(ConnectionKey.PostgresLocal)]IPostgreSqlConnectionFactory factory) : base(factory)
         {
         }
     }
